@@ -12,14 +12,16 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-    <quarkus.platform.version>2.16.12.Final</quarkus.platform.version>
+    <quarkus.platform.version>3.8.4</quarkus.platform.version>
     <skipITs>true</skipITs>
     <surefire-plugin.version>3.0.0-M7</surefire-plugin.version>
-    <version.io.quarkiverse.embedded.postgresql>0.0.2</version.io.quarkiverse.embedded.postgresql>
+    <version.io.quarkiverse.embedded.postgresql>0.2.2</version.io.quarkiverse.embedded.postgresql>
 
     <kogito.bom.group-id>com.ibm.bamoe</kogito.bom.group-id>
     <kogito.bom.artifact-id>bamoe-bom</kogito.bom.artifact-id>
-    <kogito.bom.version>9.0.1.Final</kogito.bom.version>
+    <kogito.bom.version>9.1.0-rc3-ibm-0001</kogito.bom.version>
+
+    <bamoe.techpreview.bom.artifact-id>bamoe-techpreview-bom</bamoe.techpreview.bom.artifact-id>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -33,6 +35,13 @@
       <dependency>
         <groupId>${kogito.bom.group-id}</groupId>
         <artifactId>${kogito.bom.artifact-id}</artifactId>
+        <version>${kogito.bom.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>${kogito.bom.group-id}</groupId>
+        <artifactId>${bamoe.techpreview.bom.artifact-id}</artifactId>
         <version>${kogito.bom.version}</version>
         <type>pom</type>
         <scope>import</scope>
@@ -66,45 +75,56 @@
       <artifactId>bamoe-ilmt-compliance-quarkus-pamoe</artifactId>
     </dependency>
 
+    <!-- Runtime -->
     <dependency>
-      <groupId>org.kie.kogito</groupId>
-      <artifactId>kogito-quarkus-decisions</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.kie.kogito</groupId>
-      <artifactId>kogito-quarkus-rules</artifactId>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-with-drools-quarkus</artifactId>
     </dependency>
 
+    <!-- Addons -->
     <dependency>
-      <groupId>org.kie.kogito</groupId>
-      <artifactId>kogito-quarkus</artifactId>
+      <groupId>org.kie</groupId>
+      <artifactId>kie-addons-quarkus-process-svg</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.kie.kogito</groupId>
-      <artifactId>kogito-addons-quarkus-process-svg</artifactId>
+      <groupId>org.kie</groupId>
+      <artifactId>kie-addons-quarkus-source-files</artifactId>
     </dependency>
 
+    <!-- Data Index Persistence -->
+    <dependency>
+      <groupId>org.kie</groupId>
+      <artifactId>kogito-addons-quarkus-data-index-persistence-postgresql</artifactId>
+    </dependency>
+
+    <!-- Jobs Service -->
+    <dependency>
+      <groupId>org.kie</groupId>
+      <artifactId>kogito-addons-quarkus-jobs</artifactId>
+    </dependency>
     <dependency>
       <groupId>org.kie.kogito</groupId>
-      <artifactId>kogito-scenario-simulation</artifactId>
-      <scope>test</scope>
+      <artifactId>jobs-service-postgresql-common</artifactId>
     </dependency>
 
     <!-- DevUI -->
     <dependency>
-      <groupId>org.kie.kogito</groupId>
-      <artifactId>runtime-tools-quarkus-extension</artifactId>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-quarkus-devui</artifactId>
       <scope>provided</scope>
     </dependency>
+
     <dependency>
-      <groupId>org.kie.kogito</groupId>
-      <artifactId>kogito-addons-quarkus-data-index-inmemory</artifactId>
-      <scope>provided</scope>
+      <groupId>io.quarkiverse.embedded.postgresql</groupId>
+      <artifactId>quarkus-embedded-postgresql</artifactId>
+      <version>${version.io.quarkiverse.embedded.postgresql}</version>
     </dependency>
+
+    <!-- Test -->
     <dependency>
       <groupId>org.kie.kogito</groupId>
-      <artifactId>kogito-addons-quarkus-jobs-service-embedded</artifactId>
-      <scope>provided</scope>
+      <artifactId>kogito-scenario-simulation</artifactId>
+      <scope>test</scope>
     </dependency>
   </dependencies>
   <build>
