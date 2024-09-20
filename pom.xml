@@ -135,11 +135,11 @@
         <artifactId>jbpm-quarkus-devui</artifactId>
       </dependency>
       <!-- OpenShift -->
-      <dependency>
+      <!-- To have OpenShift Deployment Capabilities Uncomment the follow Dependency-->
+      <!-- <dependency>
         <groupId>io.quarkus</groupId>
         <artifactId>quarkus-openshift</artifactId>
-        <optional>true</optional>
-      </dependency>
+      </dependency> -->
       <!-- Scenario Simulation -->
       <dependency>
         <groupId>org.kie.kogito</groupId>
