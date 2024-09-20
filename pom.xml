@@ -138,6 +138,7 @@
       <dependency>
         <groupId>io.quarkus</groupId>
         <artifactId>quarkus-openshift</artifactId>
+        <optional>true</optional>
       </dependency>
       <!-- Scenario Simulation -->
       <dependency>
