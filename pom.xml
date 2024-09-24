@@ -31,26 +31,41 @@
     <dependencyManagement>
       <dependencies>
         <dependency>
-          <groupId>com.ibm.bamoe</groupId>
-          <artifactId>bamoe-bom</artifactId>
-          <version>9.1.1-ibm-0002</version>
-          <scope>import</scope>
+          <groupId>${quarkus.platform.group-id}</groupId>
+          <artifactId>${quarkus.platform.artifact-id}</artifactId>
+          <version>${quarkus.platform.version}</version>
           <type>pom</type>
+          <scope>import</scope>
         </dependency>
         <dependency>
-          <groupId>com.ibm.bamoe</groupId>
-          <artifactId>bamoe-techpreview-bom</artifactId>
-          <version>9.1.1-ibm-0002</version>
-          <scope>import</scope>
+          <groupId>${kogito.bom.group-id}</groupId>
+          <artifactId>${kogito.bom.artifact-id}</artifactId>
+          <version>${kogito.bom.version}</version>
           <type>pom</type>
+          <scope>import</scope>
+        </dependency>
+        <dependency>
+          <groupId>${kogito.bom.group-id}</groupId>
+          <artifactId>${bamoe.techpreview.bom.artifact-id}</artifactId>
+          <version>${kogito.bom.version}</version>
+          <type>pom</type>
+          <scope>import</scope>
         </dependency>
       </dependencies>
     </dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>com.ibm.bamoe</groupId>
-        <artifactId>bamoe-ilmt-compliance-quarkus-pamoe</artifactId>
-        <version>9.1.1-ibm-0002</version>
+        <groupId>io.quarkus</groupId>
+        <artifactId>quarkus-arc</artifactId>
+      </dependency>
+      <dependency>
+        <groupId>io.quarkus</groupId>
+        <artifactId>quarkus-junit5</artifactId>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+          <groupId>io.quarkus</groupId>
+          <artifactId>quarkus-openshift</artifactId>
       </dependency>
       <dependency>
         <groupId>io.quarkus</groupId>
@@ -64,21 +79,63 @@
         <groupId>io.quarkus</groupId>
         <artifactId>quarkus-smallrye-openapi</artifactId>
       </dependency>
+  
+  <!-- graphql ui -->
       <dependency>
         <groupId>io.quarkus</groupId>
-        <artifactId>quarkus-smallrye-health</artifactId>
+        <artifactId>quarkus-smallrye-graphql-client</artifactId>
       </dependency>
+  
+      <!-- Additional dependencies for jobs mgmt and other  -->
+  
       <dependency>
-        <groupId>org.jbpm</groupId>
-        <artifactId>jbpm-with-drools-quarkus</artifactId>
-      </dependency>
-      <dependency>
-        <groupId>org.kie</groupId>
-        <artifactId>kie-addons-quarkus-process-management</artifactId>
+        <groupId>io.quarkus</groupId>
+        <artifactId>quarkus-hibernate-validator</artifactId>
       </dependency>
       <dependency>
         <groupId>org.kie</groupId>
         <artifactId>kogito-addons-quarkus-jobs-management</artifactId>
+      </dependency>
+      <dependency>
+        <groupId>org.kie</groupId>
+        <artifactId>kogito-addons-quarkus-data-index-postgresql</artifactId>
+      </dependency>
+      <dependency>
+        <groupId>org.kie</groupId>
+        <artifactId>kogito-addons-quarkus-jobs</artifactId>
+      </dependency>
+      <dependency>
+        <groupId>org.kie.kogito</groupId>
+        <artifactId>jobs-service-postgresql-common</artifactId>
+      </dependency>
+      <dependency>
+        <groupId>org.kie.kogito</groupId>
+        <artifactId>kogito-scenario-simulation</artifactId>
+        <scope>test</scope>
+      </dependency>
+  
+  
+      <!-- end of extra deps -->
+      <!-- 
+      <dependency>
+        <groupId>org.kie</groupId>
+        <artifactId>kie-addons-quarkus-events-process</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>io.quarkus</groupId>
+          <artifactId>quarkus-smallrye-reactive-messaging-kafka</artifactId>
+      </dependency>  -->
+  
+      <!-- Runtime -->
+      <dependency>
+        <groupId>com.ibm.bamoe</groupId>
+        <artifactId>bamoe-ilmt-compliance-quarkus-pamoe</artifactId>
+      </dependency>
+  
+      <!-- Addons -->
+      <dependency>
+        <groupId>org.jbpm</groupId>
+        <artifactId>jbpm-with-drools-quarkus</artifactId>
       </dependency>
       <dependency>
         <groupId>org.kie</groupId>
@@ -88,59 +145,45 @@
         <groupId>org.kie</groupId>
         <artifactId>kie-addons-quarkus-source-files</artifactId>
       </dependency>
-      <!-- Persistence -->
-      <dependency>
-        <groupId>io.quarkus</groupId>
-        <artifactId>quarkus-jdbc-postgresql</artifactId>
-      </dependency>
-      <dependency>
-        <groupId>io.quarkus</groupId>
-        <artifactId>quarkus-agroal</artifactId>
-      </dependency>
       <dependency>
         <groupId>org.kie</groupId>
-        <artifactId>kie-addons-quarkus-persistence-jdbc</artifactId>
+        <artifactId>kie-addons-quarkus-process-management</artifactId>
       </dependency>
-      <!-- Data Index Addon -->
+  
+      <!-- Data Index -->
+      <dependency>
+        <groupId>org.kie</groupId>
+        <artifactId>kogito-addons-quarkus-jobs-management</artifactId>
+      </dependency>
+  
+      <!-- Jobs Service -->
       <dependency>
         <groupId>org.kie</groupId>
         <artifactId>kogito-addons-quarkus-data-index-postgresql</artifactId>
       </dependency>
-      <!-- Data Index Persistence -->
-      <dependency>
-        <groupId>org.kie</groupId>
-        <artifactId>kogito-addons-quarkus-data-index-persistence-postgresql</artifactId>
-      </dependency>
-      <!-- Jobs Service -->
       <dependency>
         <groupId>org.kie</groupId>
         <artifactId>kogito-addons-quarkus-jobs</artifactId>
       </dependency>
+  
+      <!-- DevUI -->
       <dependency>
         <groupId>org.kie.kogito</groupId>
         <artifactId>jobs-service-postgresql-common</artifactId>
       </dependency>
-      <!-- Data Audit -->
-      <dependency>
-        <groupId>org.kie</groupId>
-        <artifactId>kogito-addons-quarkus-data-audit-jpa</artifactId>
-      </dependency>
-      <dependency>
-        <groupId>org.kie</groupId>
-        <artifactId>kogito-addons-quarkus-data-audit</artifactId>
-      </dependency>
-      <!-- DevUI -->
+  
       <dependency>
         <groupId>org.jbpm</groupId>
         <artifactId>jbpm-quarkus-devui</artifactId>
+        <scope>provided</scope>
       </dependency>
-      <!-- OpenShift -->
-      <!-- To have OpenShift Deployment Capabilities Uncomment the follow Dependency-->
-      <!-- <dependency>
-        <groupId>io.quarkus</groupId>
-        <artifactId>quarkus-openshift</artifactId>
-      </dependency> -->
-      <!-- Scenario Simulation -->
+  
+      <!-- Test -->
+      <dependency>
+        <groupId>io.quarkiverse.embedded.postgresql</groupId>
+        <artifactId>quarkus-embedded-postgresql</artifactId>
+        <version>${version.io.quarkiverse.embedded.postgresql}</version>
+      </dependency>
       <dependency>
         <groupId>org.kie.kogito</groupId>
         <artifactId>kogito-scenario-simulation</artifactId>
@@ -148,7 +191,6 @@
       </dependency>
     </dependencies>
     <build>
-      <finalName>${project.artifactId}</finalName>
       <plugins>
         <plugin>
           <groupId>${quarkus.platform.group-id}</groupId>
@@ -166,23 +208,58 @@
           </executions>
         </plugin>
         <plugin>
-          <artifactId>maven-antrun-plugin</artifactId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>${compiler-plugin.version}</version>
+          <configuration>
+            <compilerArgs>
+              <arg>-parameters</arg>
+            </compilerArgs>
+          </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>${surefire-plugin.version}</version>
+          <configuration>
+            <systemPropertyVariables>
+              <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+              <maven.home>${maven.home}</maven.home>
+            </systemPropertyVariables>
+          </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>maven-failsafe-plugin</artifactId>
+          <version>${surefire-plugin.version}</version>
           <executions>
             <execution>
-              <phase>package</phase>
               <goals>
-                <goal>run</goal>
+                <goal>integration-test</goal>
+                <goal>verify</goal>
               </goals>
               <configuration>
-                <target>
-                  <copy overwrite="true" todir="./docker-compose/svg">
-                    <fileset dir="target/classes/META-INF/processSVG/"/>
-                  </copy>
-                </target>
+                <systemPropertyVariables>
+                  <native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>
+                  <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+                  <maven.home>${maven.home}</maven.home>
+                </systemPropertyVariables>
               </configuration>
             </execution>
           </executions>
         </plugin>
       </plugins>
     </build>
-</project>
+    <profiles>
+      <profile>
+        <id>native</id>
+        <activation>
+          <property>
+            <name>native</name>
+          </property>
+        </activation>
+        <properties>
+          <skipITs>false</skipITs>
+          <quarkus.package.type>native</quarkus.package.type>
+        </properties>
+      </profile>
+    </profiles>
+  </project>
+  

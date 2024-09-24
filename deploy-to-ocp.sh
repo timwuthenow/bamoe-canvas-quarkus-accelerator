@@ -5,7 +5,8 @@ read -p "Input Namespace: " NAMESPACE
 
 # Confirm service name
 SERVICE_NAME="cc-application-approval"
-KEYCLOAK_URL=keycloak-timothywuthenow-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/auth
+BASE_URL=apps.sandbox-m2.ll9k.p1.openshiftapps.com
+KEYCLOAK_URL=keycloak-$NAMESPACE.$BASE_URL/auth
 read -p "Confirm service name ($SERVICE_NAME)? [Y/n]: " CONFIRM
 if [[ $CONFIRM =~ ^[Nn]$ ]]; then
     read -p "Enter new service name: " SERVICE_NAME
@@ -20,7 +21,11 @@ mvn clean package \
     -Dquarkus.kubernetes-client.namespace=$NAMESPACE \
     -Dquarkus.openshift.deploy=true \
     -Dquarkus.openshift.expose=true \
-    -Dquarkus.application.name=$SERVICE_NAME
+    -Dquarkus.application.name=$SERVICE_NAME \
+    -Dkogito.service.url=https://$SERVICE_NAME-$NAMESPACE.$BASE_URL \
+    -Dkogito.jobs-service.url=https://$SERVICE_NAME-$NAMESPACE.$BASE_URL \
+    -Dkogito.dataindex.http.url=https://$SERVICE_NAME-$NAMESPACE.$BASE_URL
+
 
 # Get the route host
 ROUTE_HOST=$(oc get route $SERVICE_NAME -o jsonpath='{.spec.host}')
