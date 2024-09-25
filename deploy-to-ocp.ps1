@@ -3,8 +3,8 @@ $NAMESPACE = Read-Host -Prompt "Input Namespace"
 
 # Confirm service name
 $SERVICE_NAME = "cc-application-approval"
-$BASE_URL = "apps.sandbox-m2.ll9k.p1.openshiftapps.com"
-$KEYCLOAK_URL = "keycloak-$NAMESPACE.$BASE_URL/auth"
+$BASE_URL = "apps.tzrosa-8bc90xwq.pzcn.p1.openshiftapps.com"
+$KEYCLOAK_URL = "keycloak-keycloak.$BASE_URL/auth"
 $CONFIRM = Read-Host -Prompt "Confirm service name ($SERVICE_NAME)? [Y/n]"
 if ($CONFIRM -match '^[Nn]$') {
     $SERVICE_NAME = Read-Host -Prompt "Enter new service name"
@@ -33,8 +33,13 @@ oc set env deployment/$SERVICE_NAME `
     KOGITO_JOBS_SERVICE_URL="https://$ROUTE_HOST" `
     KOGITO_DATAINDEX_HTTP_URL="https://$ROUTE_HOST"
 
-# Patch the route for edge TLS termination
-oc patch route $SERVICE_NAME -p '{"spec":{"tls":{"termination":"edge"}}}'
+# Configure the route for HTTPS
+oc patch route $SERVICE_NAME --type=json -p '[
+    {"op": "add", "path": "/spec/tls", "value": 
+        {"termination": "edge", "insecureEdgeTerminationPolicy": "Redirect"}
+    },
+    {"op": "replace", "path": "/spec/port/targetPort", "value": "8080-tcp"}
+]'
 
 # Deploy Task Console
 $taskConsoleYaml = @"
@@ -94,6 +99,7 @@ spec:
     targetPort: 8080
   tls:
     termination: edge
+    insecureEdgeTerminationPolicy: Redirect
 "@
 
 $taskConsoleYaml | oc apply -f -
@@ -158,6 +164,7 @@ spec:
     targetPort: 8080
   tls:
     termination: edge
+    insecureEdgeTerminationPolicy: Redirect
 "@
 
 $managementConsoleYaml | oc apply -f -
