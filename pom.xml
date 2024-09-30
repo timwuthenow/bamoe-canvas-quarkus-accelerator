@@ -28,6 +28,13 @@
   
       <bamoe.techpreview.bom.artifact-id>bamoe-techpreview-bom</bamoe.techpreview.bom.artifact-id>
     </properties>
+        <!-- Add the custom repository -->
+    <repositories>
+      <repository>
+        <id>bamoe-maven-repo-keycloak</id>
+        <url>https://bamoe-maven-repo-keycloak.apps.tzrosa-8bc90xwq.pzcn.p1.openshiftapps.com/</url>
+      </repository>
+    </repositories>
     <dependencyManagement>
       <dependencies>
         <dependency>
